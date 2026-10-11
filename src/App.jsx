@@ -56,18 +56,18 @@ function App() {
           <p key={oneItem.id}>
             {oneItem.name} - {oneItem.price}
             <button>Add to Cart</button></p>
-
         ))}
-
+        {availableItems.length === 0 ? 'No item available' : ''}
       </div>
       <h2>Shopping Cart</h2>
       <div>
-        {shoppingCart.map((item)=> (
+        {shoppingCart.map((item) => (
           <p key={item.id}>
             {item.name} - {item.price}
           </p>
-        ))}        
-        </div>
+        ))}
+        {shoppingCart.length === 0 ? 'shopping cart is empty' : ''}
+      </div>
     </div>
   );
 }
