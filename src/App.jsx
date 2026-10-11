@@ -40,21 +40,44 @@ function App() {
 
   const [shoppingCart, setShoppingCart] = useState([])
   const [availableBalance, setAvailableBalance] = useState(100)
+  const [warningMessage, setWarningMessage] = useState('')
 
 
-function handleAddToCart(item) {
-  const updatedItems = availableItems.filter(
-    (oneItem) => oneItem.id !== item.id
-  );
+  function handleAddToCart(item) {
+    if (availableBalance >= item.price) {
+      const updatedItems = availableItems.filter(
+        (oneItem) => oneItem.id !== item.id
+      );
 
-  setAvailableItems(updatedItems);
-  setShoppingCart([...shoppingCart, item])
-}
+      setAvailableItems(updatedItems);
+      setShoppingCart([...shoppingCart, item])
+      setAvailableBalance(availableBalance - item.price);
+      setWarningMessage('');
+    } else {
+      setWarningMessage('Insufficient funds. Your balance is too low to purchase this item');
+
+      setTimeout(() => {
+        setWarningMessage('');
+      }, 4000);
+    }
+  }
+
+  function handleRemoveFromShoppingCart(item) {
+    const updatedCart = shoppingCart.filter(
+      (cartItem) => cartItem.id !== item.id
+    );
+
+    setShoppingCart(updatedCart);
+    setAvailableItems([...availableItems, item]);
+    setAvailableBalance(availableBalance + item.price);
+  }
 
   return (
     <div>
       <h1>Sayed Hamed's Closet</h1>
-
+      <div>
+        {warningMessage}
+      </div>
       <h2>Your Balance: {availableBalance}</h2>
 
       <h2>Available Items</h2>
@@ -63,8 +86,8 @@ function handleAddToCart(item) {
         {availableItems.map((oneItem) => (
           <p key={oneItem.id}>
             {oneItem.name} - {oneItem.price}
-            <button onClick ={()=>{handleAddToCart(oneItem)}}
->Add to Cart</button></p>
+            <button onClick={() => { handleAddToCart(oneItem) }}
+            >Add to Cart</button></p>
         ))}
         {availableItems.length === 0 ? 'No item available' : ''}
       </div>
@@ -73,9 +96,15 @@ function handleAddToCart(item) {
         {shoppingCart.map((item) => (
           <p key={item.id}>
             {item.name} - {item.price}
+            <button onClick={() => handleRemoveFromShoppingCart(item)}>
+              Remove from Cart</button>
           </p>
-        ))}
+
+        ))
+
+        }
         {shoppingCart.length === 0 ? 'shopping cart is empty' : ''}
+
       </div>
     </div>
   );
