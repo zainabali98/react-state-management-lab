@@ -38,10 +38,18 @@ function App() {
       }
     ])
 
-
-
   const [shoppingCart, setShoppingCart] = useState([])
   const [availableBalance, setAvailableBalance] = useState(100)
+
+
+function handleAddToCart(item) {
+  const updatedItems = availableItems.filter(
+    (oneItem) => oneItem.id !== item.id
+  );
+
+  setAvailableItems(updatedItems);
+  setShoppingCart([...shoppingCart, item])
+}
 
   return (
     <div>
@@ -55,7 +63,8 @@ function App() {
         {availableItems.map((oneItem) => (
           <p key={oneItem.id}>
             {oneItem.name} - {oneItem.price}
-            <button>Add to Cart</button></p>
+            <button onClick ={()=>{handleAddToCart(oneItem)}}
+>Add to Cart</button></p>
         ))}
         {availableItems.length === 0 ? 'No item available' : ''}
       </div>
