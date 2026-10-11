@@ -53,9 +53,12 @@ function App() {
       <div>
 
         {availableItems.map((oneItem) => (
-          <p key={oneItem.id}>{oneItem.name}</p>
+          <p key={oneItem.id}>{oneItem.name} - {oneItem.price}
+          
+          <button>Add to Cart</button></p>
+          
         ))}
-
+      
       </div>
       <h2>Shopping Cart</h2>
 
