@@ -38,17 +38,25 @@ function App() {
       }
     ])
 
+
+
   const [shoppingCart, setShoppingCart] = useState([])
   const [availableBalance, setAvailableBalance] = useState(100)
 
   return (
     <div>
-      <h1>Sayed Hameds Closet</h1>
+      <h1>Sayed Hamed's Closet</h1>
 
       <h2>Your Balance: {availableBalance}</h2>
 
       <h2>Available Items</h2>
+      <div>
 
+        {availableItems.map((oneItem) => (
+          <p key={oneItem.id}>{oneItem.name}</p>
+        ))}
+
+      </div>
       <h2>Shopping Cart</h2>
 
     </div>
